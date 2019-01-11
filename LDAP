@@ -2,6 +2,11 @@
 #https://www.server-world.info/en/note?os=CentOS_7&p=openldap
 #This is a basis for students to create a fully functioning build, compile, and deploy script.
 
+yum install -y git
+cd /tmp
+git clone
+
+
 yum -y install openldap-servers openldap-clients
 
 cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG 
