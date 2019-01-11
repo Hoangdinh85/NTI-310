@@ -30,18 +30,22 @@ sed -i 's,Require local,#Require local\n    Require all granted,g' /etc/httpd/co
 #(prompt for user input), the following is currently a manual config, but could be automated fairly easily
 #slappasswd
 #open tcp port 389
-#
 
 
+#Enter each command seperately.
 echo "dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcSuffix
 olcSuffix: dc=nti310,dc=local
-dn: olcDatabase={2}hdb,cn=config
+
+#Enter each command seperately.
+echo "dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootDN
 olcRootDN: cn=ldapadm,dc=nti310,dc=local
-dn: olcDatabase={2}hdb,cn=config
+
+#Enter each command seperately.
+echo "dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootPW
 olcRootPW: $newhash" >> db.ldif
@@ -66,11 +70,14 @@ chown -R ldap. /etc/openldap/certs/nti*.pem
 
 # Use Certs in LDAP
 
+#Enter each command seperately.
 echo "dn: cn=config
 changetype: modify
 replace: olcTLSCertificateFile
 olcTLSCertificateFile: /etc/openldap/certs/nti310ldapcert.pem
-dn: cn=config
+
+#Enter each command seperately.
+echo "dn: cn=config
 changetype: modify
 replace: olcTLSCertificateKeyFile
 olcTLSCertificateKeyFile: /etc/openldap/certs/nti310ldapkey.pem" > certs.ldif
@@ -91,18 +98,25 @@ ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
 
 # Create base group and people structure
 
+#Enter each command seperately.
 echo "dn: dc=nti310,dc=local
 dc: nti310
 objectClass: top
 objectClass: domain
-dn: cn=ldapadm ,dc=nti310,dc=local
+
+#Enter each command seperately.
+echo "dn: cn=ldapadm ,dc=nti310,dc=local
 objectClass: organizationalRole
 cn: ldapadm
 description: LDAP Manager
-dn: ou=People,dc=nti310,dc=local
+
+#Enter each command seperately.
+echo "dn: ou=People,dc=nti310,dc=local
 objectClass: organizationalUnit
 ou: People
-dn: ou=Group,dc=nti310,dc=local
+
+#Enter each command seperately.
+echo "dn: ou=Group,dc=nti310,dc=local
 objectClass: organizationalUnit
 ou: Group" > base.ldif
 
