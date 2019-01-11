@@ -40,17 +40,17 @@ cp /etc/phpldapadmin/config.php /ect/phpldapadmin/config.php.orig
 
 
 
-echo "dn: olcDatabase={2}hdb,cn=config
+echo -e "dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcSuffix
 olcSuffix: dc=nti310,dc=local
 \n
-echo "dn: olcDatabase={2}hdb,cn=config
+dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootDN
 olcRootDN: cn=ldapadm,dc=nti310,dc=local
 \n
-echo "dn: olcDatabase={2}hdb,cn=config
+dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootPW
 olcRootPW: $newhash" >> db.ldif
