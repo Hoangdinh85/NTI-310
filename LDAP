@@ -26,6 +26,8 @@ systemctl start httpd
 
 sed -i 's,Require local,#Require local\n    Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
 
+cp /etc/phpldapadmin/config.php /ect/phpldapadmin/config.php.orig
+
 # decent config guide: http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-configure-phpldapadmin-centos-7-ubuntu-16-04.html
 
 
