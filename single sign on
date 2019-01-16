@@ -1,0 +1,17 @@
+What does LDAP stand for?
+Lightweight Directory Access Protocol
+
+Why is it used in large production environments?
+LDAP is design to provide extremely fast performance for a large scale of dataset. It can easily offload the user validation and gain significant performance improvement.
+
+What does it do?
+LDAP is a protocol for accessing a directory such as objects and let users access company structure information. It also gives user query methods to add, update, and remove objects within a directory. It does not provide a database but the other way around.
+
+What is Kerberos?
+Kerberos is a protocol for authentication service request.
+
+Why is it used in production?
+Kerberos is use because it can authentication the client creditably to the company and keep track of users with timestamp. 
+
+What does it do?
+It provided a client-server model and mutual authentication both the user and the server verify each other identity.
