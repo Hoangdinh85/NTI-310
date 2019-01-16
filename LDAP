@@ -7,8 +7,8 @@
 yum install -y git
 #change directory to tmp
 cd /tmp
-#clone git respository
-git clone
+#clone git from my respository
+git clone https://github.com/Hoangdinh85/NTI-310.git
 
 
 #install ldap servers and clients
@@ -24,32 +24,40 @@ systemctl start slapd
 
 
 #install httpd and phpldapadmin
-yum -y install httpd
-yum -y install phpldapadmin
+yum -y install httpd -y
+yum install epel-release -y
+yum -y install phpldapadmin -y
 
 
 # some source editing
 # Tell SE linux what's going on, so that it doesn't freek
+# allow apache http connect to ldap 
 setsebool -P httpd_can_connect_ldap on
 
+#enable and start httpd
 systemctl enable httpd
 systemctl start httpd
 
+# modify our http.com allow us to access from web
 sed -i 's,Require local,#Require local\n    Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
 
-cp /etc/phpldapadmin/config.php /ect/phpldapadmin/config.php.orig
+#cp an alias cp without confirmation
+unalias cp
 
-# decent config guide: http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-configure-phpldapadmin-centos-7-ubuntu-16-04.html
+#copy config file on github to phpldapadmin.config.php
+cp /tmp/NTI-310/config.php /ect/phpldapadmin/config.php.orig
 
+#change ownership 
+chown ldap:apache /etc/phpldapadmin/config.php
 
+#restart systemctl httpd.service
+systemctl restart httpd.service
 
-#Note: LDAP comes up completely insecure, with Anonymous login enabled by default... this is not a good and happy thing, so fix 
-#it in the config file
-#(prompt for user input), the following is currently a manual config, but could be automated fairly easily
-#slappasswd
-#open tcp port 389
-
-
+#Generates and stores new passwd securely
+newcecret=$(slappasswd -g)
+newhash=$(slappasswd -s "$newsecret")
+echo -n "$newsecret" > /root.ldap_admin_pass
+chmod 0600 /root/ldap_admin_pass
 
 echo -e "dn: olcDatabase={2}hdb,cn=config
 changetype: modify
