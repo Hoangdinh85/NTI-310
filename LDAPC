@@ -74,3 +74,72 @@ olcRootPW: $newhash" > db.ldif
 
 #
 ldapmodify -Y EXTERNAL -H ldapi:/// -f db.ldif
+
+# Auth Restriction
+echo 'dn: olcDatabase={1}monitor,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external, cn=auth" read by dn.base="cn=ldapadm,dc=nti310,dc=local" read by * none' > monitor.ldif
+
+ldapmodify -Y EXTERNAL  -H ldapi:/// -f monitor.ldif
+
+# Generate ssl certs on the padlock on port 443 http
+openssl req -new -x509 -nodes -out /etc/openldap/certs/nti310ldapcert.pem -keyout /etc/openldap/certs/nti310ldapkey.pem -days 365 -subj "/C=US/ST=WA/L=Seattle/O=SCC/OU=IT/CN=nti310.local"
+
+#change the ownership from ldap to local /etc/openldap/certs/nti310 location
+chown -R ldap. /etc/openldap/certs/nti*.pem
+
+# Use Certs in LDAP
+
+#Enter each command seperately.
+echo -e dn: cn=config
+changetype: modify
+replace: olcTLSCertificateKeyFile
+olcTLSCertificateKeyFile: /etc/openldap/certs/nti310ldapkey.pem" > certs.ldif
+
+#Enter each command seperately.
+dn: cn=config
+changetype: modify
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/openldap/certs/nti310ldapcert.pem
+
+
+ldapmodify -Y EXTERNAL  -H ldapi:/// -f certs.ldif
+
+# Test cert configuration
+slaptest -u
+
+#this unalias cp will let the system think it's not cp
+unalias cp
+
+#provide different schema for ldif
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif 
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+
+# Create base group, top domain, ldap manager, and people structure
+echo "dn: dc=nti310,dc=local
+dc: nti310
+objectClass: top
+objectClass: domain
+\n
+dn: cn=ldapadm ,dc=nti310,dc=local
+objectClass: organizationalRole
+cn: ldapadm
+description: LDAP Manager
+\n
+dn: ou=People,dc=nti310,dc=local
+objectClass: organizationalUnit
+ou: People
+\n
+dn: ou=Group,dc=nti310,dc=local
+objectClass: organizationalUnit
+ou: Group" > base.ldif
+
+#this line set SELinux 0
+setenforce 0
+
+ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
+
+#restart the systemctl httpd
+systemctl restart httpd
