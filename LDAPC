@@ -1,0 +1,75 @@
+#!/bin/bash
+
+#Install git
+yum install -y git
+#change directory to tmp
+cd /tmp
+#clone git from my respository
+git clone https://github.com/Hoangdinh85/NTI-310.git
+
+
+#install ldap servers and clients
+yum -y install openldap-servers openldap-clients
+
+#copy DB_CONFIG.example to DB_CONFIG
+cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG 
+chown ldap. /var/lib/ldap/DB_CONFIG
+
+#enable and start slapd
+systemctl enable slapd
+systemctl start slapd
+
+
+#install httpd and phpldapadmin
+yum -y install httpd -y
+yum install epel-release -y
+yum -y install phpldapadmin -y
+
+
+# some source editing
+# Tell SE linux what's going on, so that it doesn't freek
+# allow apache http connect to ldap 
+setsebool -P httpd_can_connect_ldap on
+
+#enable and start httpd
+systemctl enable httpd
+systemctl start httpd
+
+# modify our http.com allow us to access from web
+sed -i 's,Require local,#Require local\n Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
+
+#cp an alias cp without confirmation
+unalias cp
+
+#copy config file on github to phpldapadmin.config.php
+cp /tmp/NTI-310/config.php /ect/phpldapadmin/config.php.orig
+
+#change ownership 
+chown ldap:apache /etc/phpldapadmin/config.php
+
+#restart systemctl httpd.service
+systemctl restart httpd.service
+
+#Generates and stores new passwd securely
+newcecret=$(slappasswd -g)
+newhash=$(slappasswd -s "$newsecret")
+echo -n "$newsecret" > /root.ldap_admin_pass
+chmod 0600 /root/ldap_admin_pass
+
+echo -e "dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcSuffix
+olcSuffix: dc=nti310,dc=local
+\n
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: cn=ldapadm,dc=nti310,dc=local
+\n
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootPW
+olcRootPW: $newhash" >> db.ldif
+
+#
+ldapmodify -Y EXTERNAL -H ldapi:/// -f db.ldif
