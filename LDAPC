@@ -141,6 +141,8 @@ setenforce 0
 
 ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
 
+
+#create users in people on LDAP
 echo -e "version: 1
 \n
 # Entry 1: cn=John Doe,ou=People,dc=nti310,dc=local
@@ -221,6 +223,7 @@ userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=" > /tmp/user1.ldif
 ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f user1.ldif -y /root/ldap_admin_pass
 \n
 echo -e "
+#create group in OU on LDAP.
 # Entry 1: cn=Group1,ou=Group,dc=nti310,dc=local
 dn: cn=Group1,ou=Group,dc=nti310,dc=local
 cn: Group1
@@ -239,5 +242,3 @@ ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f groups.ldif -y /root/ldap_ad
 
 #restart the systemctl httpd
 systemctl restart httpd
-
-
