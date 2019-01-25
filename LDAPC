@@ -141,5 +141,103 @@ setenforce 0
 
 ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
 
+echo -e "version: 1
+\n
+# Entry 1: cn=John Doe,ou=People,dc=nti310,dc=local
+dn: cn=John Doe,ou=People,dc=nti310,dc=local
+cn: John Doe
+gidnumber: 500
+givenname: John
+homedirectory: /home/jdoe
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: joe
+uid: jdoe
+uidnumber: 1001
+userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=
+\n
+# Entry 2: cn=James Smith,ou=People,dc=nti310,dc=local
+dn: cn=James Smith,ou=People,dc=nti310,dc=local
+cn: James Smith
+gidnumber: 500
+givenname: James
+homedirectory: /home/jsmith
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Smith
+uid: jsmith
+uidnumber: 1002
+userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=
+\n
+# Entry 3: cn=Austin Smith,ou=People,dc=nti310,dc=local
+dn: cn=Austin Smith,ou=People,dc=nti310,dc=local
+cn: Austin Smith
+gidnumber: 500
+givenname: Austin
+homedirectory: /home/asmith
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Smith
+uid: asmith
+uidnumber: 1003
+userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=
+\n
+# Entry 4: cn=Matthew Halls,ou=People,dc=nti310,dc=local
+dn: cn=Matthew Halls,ou=People,dc=nti310,dc=local
+cn: Matthew Halls
+gidnumber: 500
+givenname: Matthew
+homedirectory: /home/mhalls
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Halls
+uid: mhalls
+uidnumber: 1004
+userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=
+\n
+# Entry 5: cn=Bill Vo,ou=People,dc=nti310,dc=local
+dn: cn=Bill Vo,ou=People,dc=nti310,dc=local
+cn: Bill Vo
+gidnumber: 500
+givenname: Bill
+homedirectory: /home/bvo
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Vo
+uid: bvo
+uidnumber: 1005
+userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=" > /tmp/user1.ldif
+\n
+ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f user1.ldif -y /root/ldap_admin_pass
+\n
+echo -e "
+# Entry 1: cn=Group1,ou=Group,dc=nti310,dc=local
+dn: cn=Group1,ou=Group,dc=nti310,dc=local
+cn: Group1
+gidnumber: 501
+objectclass: posixGroup
+objectclass: top
+\n
+# Entry 2: cn=Group2,ou=Group,dc=nti310,dc=local
+dn: cn=Group2,ou=Group,dc=nti310,dc=local
+cn: Group2
+gidnumber: 501
+objectclass: posixGroup
+objectclass: top
+\n
+ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f groups.ldif -y /root/ldap_admin_pass
+
 #restart the systemctl httpd
 systemctl restart httpd
+
+
