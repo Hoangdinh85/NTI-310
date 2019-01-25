@@ -1,0 +1,40 @@
+#install nfs-utils
+yum install -y nfs-utils
+#make directories
+mkdir /var//nfsshare
+mkdir /var/nfsshare
+mkdir /var/nfsshare/devstuff
+mkdir /var/nfsshare/testing
+mkdir /var/nfsshare/home_dirs
+#change ownership tp /var/nfsshare
+chmod -R 777 /var/nfsshare/
+#Enable systemctl's
+systemctl enable rpcbind
+systemctl enable nfs-server
+systemctl enable nfs-lock
+systemctl enable nfs-idmap
+#Start systemctl's
+systemctl start rpcbind
+systemctl start nfs-server
+systemctl start nfs-lock
+systemctl start nfs-idmap
+#change directory
+cd /var/nfsshare/
+#echo statement
+echo "/var/nfsshare/home_dirs *(rw,sync,no_all_squash)
+/var/nfsshare/devstuff *(rw,sync,no_all_squash)
+/var/nfsshare/testing *(rw,sync,no_all_squash)" >> /etc/exports
+#Restart the nfs-server
+systemctl restart nfs-server
+#Install net-tools
+yum -y install net-tools
+#Mount Server IP address
+showmount -e 10.142.0.12
+#Make directory /mnt/test
+mkdir /mnt/test  
+#
+echo "10.142.0.12:var/nfsshare/testing
+/mnt/test
+nfs
+defaults 0 0" >> /etc/fstab
+mount -a
