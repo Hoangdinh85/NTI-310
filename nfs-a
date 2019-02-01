@@ -43,7 +43,7 @@ showmount -e 10.142.0.12
 #Make directory /mnt/test
 mkdir /mnt/test  
 
-#
+#Automate ipaddress=$(ifconfig | grep broadcast |  awk '{print $2}')
 echo "10.142.0.12:var/nfsshare/testing
 /mnt/test
 nfs
