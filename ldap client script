@@ -1,0 +1,7 @@
+#Install ldap client packages
+apt-get update
+apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils
+
+#Configuring ldap-auth-config(your ldap server name)
+ldapc
+
