@@ -1,0 +1,14 @@
+#make a directory
+mkdir /mnt/test
+
+#install the nfs-client for the Ubuntu 18.04 LS
+apt-get install -y nfs-client
+
+#testing the file
+mkdir /mnt/test
+
+#Connect this client to the nfs server
+echo "10.142.0.14:var/nfsshare/testing /mnt/test nfs defaults 0 0" >> /etc/fstab
+
+#this line mount it
+mount -a
