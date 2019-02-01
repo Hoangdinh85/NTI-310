@@ -38,13 +38,13 @@ systemctl restart nfs-server
 yum -y install net-tools
 
 #Mount Server IP address
-showmount -e 10.142.0.12
+showmount -e 10.142.0.14
 
 #Make directory /mnt/test
 mkdir /mnt/test  
 
 #Automate ipaddress=$(ifconfig | grep broadcast |  awk '{print $2}')
-echo "10.142.0.12:var/nfsshare/testing
+echo "10.142.0.14:var/nfsshare/testing
 /mnt/test
 nfs
 defaults 0 0" >> /etc/fstab
