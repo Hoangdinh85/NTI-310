@@ -33,7 +33,7 @@ vim /etc/nsswitch.conf
 #this line edit the file ldap.conf
 vim /etc/ldap/ldap.conf
 
-#this line restart the nsl
+#this line restart the nfs
 /etc/init.d/nslcd restart
 
 #this line show the user we created on the ldap server.
