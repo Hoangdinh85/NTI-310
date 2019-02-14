@@ -18,6 +18,7 @@ apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils
 
 #this line edit the file
 vim /etc/nsswitch.conf
+#this is what we changed in the file.
 #passwd:         compat ldap systemd
 #group:          compat ldap systemd
 #shadow:         compat ldap
