@@ -1,0 +1,42 @@
+Postgres
+
+
+
+yum -y install python-pip python-devel gcc postgresql-server postgresql-devel postgresql-contrib
+
+sudo postgresql-setup initdb
+
+
+#this will start the PostgreSQL service
+systemctl start postgresql
+
+#vim to edit the file.
+vim /var/lib/pgsql/data/pg_hba.conf
+
+#edit the original line.
+sed -i 's,host    all             all             127.0.0.1/32            ident,host    all             all             127.0.0.1/32            md5,g'/var/lib/pgsql/data/pg_hba.conf
+sed -i 's,host    all             all             ::1/128                 ident,host    all             all             127.0.0.1/32            md5,g'/var/lib/pgsql/data/pg_hba.conf
+
+#restart postgresql
+systemctl restart postgresql
+
+#enable postgresql
+systemctl enable postgresql
+
+#For automatingbring us to sudo su postgres
+#sudo -u  postgres ""
+
+
+su -u postgre "psql -a -f "
+
+
+echo "CREATE DATABASE myproject;
+CREATE USER myprojectuser WITH PASSWORD 'password';
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE myprojectuser SET timezone TO 'UTC';" 
+GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser; >>/tmp/tempfile
+\q
+exit
+
+sudo -u postgre "psql -f /tmp/tempfile"
