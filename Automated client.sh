@@ -16,6 +16,7 @@ apt-get --yes install libnss-ldap libpam-ldap ldap-utils nscd
 #this line will unset the config screen
 unset DEBIAN_FRONTEND
 
+#these lines auto config the client with all configurations to spin up the client.
 echo "ldap-auth-config ldap-auth-config/bindpw password
 nslcd nslcd/ldap-bindpw password
 ldap-auth-config ldap-auth-config/rootbindpw password
