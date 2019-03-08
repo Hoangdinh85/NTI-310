@@ -14,16 +14,12 @@ echo "nfs-a:var/nfsshare/testing /mnt/test nfs defaults 0 0" >> /etc/fstab
 mount -a
 
 #update 
-apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils
-
+#apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils
 #this line edit the file
-vim /etc/nsswitch.conf
-
+#vim /etc/nsswitch.conf
 #this line edit the file ldap.conf
-vim /etc/ldap/ldap.conf
-
+#vim /etc/ldap/ldap.conf
 #this line restart the nfs
-/etc/init.d/nslcd restart
-
+#/etc/init.d/nslcd restart
 #this line show the user we created on the ldap server.
-ldapsearch -b "dc=nti310,dc=local" -x -d 1 2>> output.txt
+#ldapsearch -b "dc=nti310,dc=local" -x -d 1 2>> output.txt
