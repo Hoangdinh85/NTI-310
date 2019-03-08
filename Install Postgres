@@ -1,11 +1,9 @@
-Postgres
+#Installing Postgres
 
 
 
 yum -y install python-pip python-devel gcc postgresql-server postgresql-devel postgresql-contrib
-
 sudo postgresql-setup initdb
-
 
 #this will start the PostgreSQL service
 systemctl start postgresql
@@ -23,7 +21,6 @@ systemctl restart postgresql
 #enable postgresql
 systemctl enable postgresql
 
-
 echo "CREATE DATABASE myproject;
 CREATE USER myprojectuser WITH PASSWORD 'password';
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
@@ -31,9 +28,10 @@ ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
 ALTER ROLE myprojectuser SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;" >> /tmp/tempfile
 
-
 #For automatingbring us to sudo su postgres
 sudo -u postgres /bin/psql -f /tmp/tempfile
+
+
 
 
 #Install phpPgAdmin
