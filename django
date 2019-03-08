@@ -1,0 +1,33 @@
+yum -y install python-pip
+pip install virtualenv
+pip install --upgrade pip
+
+#make directory called my project
+mkdir ~/myproject
+
+#change directory to my project
+cd ~/myproject
+
+#create a virtual environment to store our Django project's
+virtualenv myprojectenv
+
+#Before we install applications within the virtual environment, we need to activate it.
+source myprojectenv/bin/activate
+
+#install Django with pip
+pip install django psycopg2
+
+#start a Django project within our myproject directory.
+django-admin.py startproject myproject .
+
+#edit the file
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'postgres-a',
+        'PORT': '5432',
+    }
+}
