@@ -1,0 +1,26 @@
+#!/bin/bash
+
+sudo yum -y update && yum -y install rsyslog
+systemctl start rsyslog
+systemctl enable rsyslog
+
+#copying the /etc/rsyslog.conf to /etc/rsyslog.conf.bak
+cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
+
+
+#edit the lines in /etc/rsyslog.conf
+sed -i 's/#$ModLoad imtcp/$ModLoad imtcp/g' /etc/rsyslog.conf
+sed -i 's/#$ModLoad imudp/$ModLoad imudp/g' /etc/rsyslog.conf
+sed -i 's/#$UDPServerRun 514/$UDPServerRun 514/g' /etc/rsyslog.conf
+sed -i 's/#$InputTCPServerRun 514/$InputTCPServerRun 514/g' /etc/rsyslog.conf
+
+#rules for processing the remote logs
+#*.* ?RemoteLogs
+#& ~
+
+systemctl restart rsyslog
+systemctl status rsyslog
+
+#on CentOS 7, if you have SELinux enabled, run the following commands to allow rsyslog traffic based on the network socket type.
+#semanage -a -t syslogd_port_t -p udp 514
+#semanage -a -t syslogd_port_t -p tcp 514
