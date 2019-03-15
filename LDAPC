@@ -52,10 +52,10 @@ systemctl restart httpd.service
 
 #Generates and stores new passwd securely
 newsecret="mypassword"
-#newhash=$(slappasswd -s "$newsecret")
-newhash=(slappasswd -s "mypassword")
-#echo -n "$newsecret" > /root/ldap_admin_pass
-echo -n "mypassword" > /root/ldap_admin_pass
+newhash=$(slappasswd -s "$newsecret")
+#newhash=(slappasswd -s "mypassword")
+echo -n "$newsecret" > /root/ldap_admin_pass
+#echo -n "mypassword" > /root/ldap_admin_pass
 chmod 0600 /root/ldap_admin_pass
 
 #configure the root domain
