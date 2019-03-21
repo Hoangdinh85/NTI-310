@@ -1,25 +1,17 @@
-#make a directory
-mkdir /mnt/test
+#!/bin/bash
+#This script spins up an ubuntu client-a
 
-#install the nfs-client for the Ubuntu 18.04 LS
+#this line installs the nfs-client for the ubuntu 18.04LS
 apt-get install -y nfs-client
 
-#testing the file
+#a testing location
 mkdir /mnt/test
 
-#Connect this client to the nfs server
-echo "nfs-a:var/nfsshare/testing /mnt/test nfs defaults 0 0" >> /etc/fstab
+#this line echos the files and places them in the /etc/fstab
+echo "nfs-a:/var/nfsshare/testing     /mnt/test     nfs     defaults 0 0" >> /etc/fstab
 
-#this line mount it
+#this line proves its in the file
+#vim /etc/fstab
+
+#this line mounts it
 mount -a
-
-#update 
-#apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd debconf-utils
-#this line edit the file
-#vim /etc/nsswitch.conf
-#this line edit the file ldap.conf
-#vim /etc/ldap/ldap.conf
-#this line restart the nfs
-#/etc/init.d/nslcd restart
-#this line show the user we created on the ldap server.
-#ldapsearch -b "dc=nti310,dc=local" -x -d 1 2>> output.txt
