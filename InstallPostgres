@@ -1,21 +1,17 @@
 #!/bin/bash
 ###micro/CentOS/Http&Https bc interacting with website
-##########SETTING UP BACKEND DB FOR POSTGRES DJANGO SERVER##########
-##########BASED ON##########
-###Django is python
-###https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-centos-7
-###https://www.vultr.com/docs/install-phppgadmin-on-centos-7
+#SETTING UP BACKEND DB FOR POSTGRES DJANGO SERVER
 
-##########DO NOT NEED FOR MANUAL BC ALREADY INSTALLED##########
-##########ONLY FOR AUTOMATION########## 
+
+#ONLY FOR AUTOMATION
 sudo yum -y install epel-release
-##########INSTALL PACKAGES GCC=GNU COMPILER##########
+#INSTALL PACKAGES GCC=GNU COMPILER
 yum -y install python-pip python-devel gcc postgresql-server postgresql-devel postgresql-contrib
-##########INITIALIZE POSTGRES##########
+#INITIALIZE POSTGRES
 postgresql-setup initdb
-##########START POSTGRES##########
+#START POSTGRES
 systemctl start postgresql
-##########EDIT CONFIG FILE AUTHENTICATION MODE TO MD5##########
+#EDIT CONFIG FILE AUTHENTICATION MODE TO MD5
 ###spaces important
 #vim /var/lib/pgsql/data/pg_hba.conf
           
