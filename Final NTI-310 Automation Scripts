@@ -1,0 +1,70 @@
+#already has git installed
+#Setup for final
+git clone https://github.com/Hoangdinh85/NTI-310/
+
+#Create seven instances
+# 5 Servers 
+# 2 Clients
+
+##LOGSERVER##
+gcloud compute instances create rsyslog-server-Final \
+--image-family centos-7 \
+--image-project centos-cloud \
+--zone us-east1-b \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=rsyslog
+
+gcloud compute instances create postgres-server-Final \
+--image-family centos-7 \
+--image-project centos-cloud \
+--zone us-east1-b \
+--tags "http-server","https-server" \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=InstallPostgres
+
+gcloud compute instances create ldap-server-Final \
+--image-family centos-7 \
+--image-project centos-cloud \
+--zone us-east1-b \
+--tags "http-server","https-server" \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=LDAPC
+
+gcloud compute instances create nfs_server_automation-Final \
+--image-family centos-7 \
+--image-project centos-cloud \
+--zone us-east1-b \
+--tags "http-server","https-server" \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=nfs-a
+
+gcloud compute instances create Django \
+--image-family centos-7 \
+--image-project centos-cloud \
+--zone us-east1-b \
+--tags "http-server","https-server" \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=django
+
+ 
+gcloud compute instances create nfs-client \
+--image-family ubuntu-1804-lts \
+--image-project ubuntu-os-cloud \
+--zone us-east1-b \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=nfs-client \
+
+#gcloud compute instances create ldapclient \
+--image-family ubuntu-1804-lts \
+--image-project ubuntu-os-cloud \
+--zone us-east1-b \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=ldapclient.sh
+
