@@ -100,9 +100,5 @@ echo "*.* @@ldap-rsyslog-1:514" >> /etc/rsyslog.conf
 
 
 
-##########BELOW ONLY NEEDED FOR MANUAL CONFIGURATION##########
-###get out of database
-#\q
-###logout
-#exit
+
 
