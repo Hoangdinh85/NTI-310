@@ -15,20 +15,9 @@ source myprojectenv/bin/activate
 pip install django psycopg2
 django-admin.py startproject myproject .
 
-#vim into vim  ~/myproject/myproject/settings.py
-#and change the following to: 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'myproject',
-#        'USER': 'myprojectuser',
-#        'PASSWORD': 'password',
-#        'HOST': 'postgresa',
-#        'PORT': '5432',
-#    }
-#}
+
+
+wget -O ~/myproject/myproject/settings.py https://github.com/Hoangdinh85/NTI-310/blob/master/settings.py
 
 python manage.py makemigrations
 python manage.py migrate
-
-wget -O ~/myproject/myproject/settings.py https://github.com/Hoangdinh85/NTI-310/blob/master/settings.py
