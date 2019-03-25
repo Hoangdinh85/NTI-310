@@ -7,7 +7,7 @@ git clone https://github.com/Hoangdinh85/NTI-310/
 # 2 Clients
 
 ##LOGSERVER##
-gcloud compute instances create rsyslog-server-Final \
+gcloud compute instances create rsyslog-server-final \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -15,7 +15,7 @@ gcloud compute instances create rsyslog-server-Final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=rsyslog
 
-gcloud compute instances create postgres-server-Final \
+gcloud compute instances create postgres-server-final \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -24,7 +24,7 @@ gcloud compute instances create postgres-server-Final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=InstallPostgres
 
-gcloud compute instances create ldap-server-Final \
+gcloud compute instances create ldap-server-final \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -33,7 +33,7 @@ gcloud compute instances create ldap-server-Final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=LDAPC
 
-gcloud compute instances create nfs_server_automation-Final \
+gcloud compute instances create nfs_server_automation-final \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
