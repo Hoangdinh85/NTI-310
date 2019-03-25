@@ -42,7 +42,7 @@ gcloud compute instances create nfs_server_automation-final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=nfs-a
 
-gcloud compute instances create Django \
+gcloud compute instances create django \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
