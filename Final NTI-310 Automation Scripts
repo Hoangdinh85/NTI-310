@@ -60,7 +60,7 @@ gcloud compute instances create nfs-client \
 --scopes cloud-platform \
 --metadata-from-file startup-script=nfs-client \
 
-#gcloud compute instances create ldapclient \
+gcloud compute instances create ldapclient \
 --image-family ubuntu-1804-lts \
 --image-project ubuntu-os-cloud \
 --zone us-east1-b \
