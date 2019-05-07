@@ -8,15 +8,12 @@ exit 0;
 fi
 apt-get update
 apt-get install -y debconf-utils
-
-#telling DEBIAN not to run autoconfig
 export DEBIAN_FRONTEND=noninteractive
-
 #this will install and then unset the variable
 apt-get --yes install libnss-ldap libpam-ldap ldap-utils nslcd
 unset DEBIAN_FRONTEND
 
-cd ~
+
 #create /tempfile and add 
 echo "ldap-auth-config ldap-auth-config/bindpw password
 nslcd nslcd/ldap-bindpw password
@@ -49,13 +46,18 @@ ldap-auth-config ldap-auth-config/dblogin boolean false" >> tempfile
 #moved everything in tempfile to debconf-set-selections
 while read line; do echo "$line" | debconf-set-selections; done < tempfile
 
-echo "ofpcxwW" > /etc/ldap.secret
+echo "P@ssw0rd1" > /etc/ldap.secret
 
 chown 600 /etc/ldap.secret
 
 sudo auth-client-config -t nss -p lac_ldap
 
 echo "account sufficient pam_succeed_if.so uid = 0 use_uid quiet" >> /etc/pam.d/su
+
+sed -i 's/base dc=example,dc=net/base dc=nti310,dc=local/g' /etc/ldap.conf
+sed -i 's,uri ldapi:///,uri ldap://ldap2/,g' /etc/ldap.conf
+sed -i 's/rootbinddn cn=manager,dc=example,dc=net/rootbinddn cn=ldapadm,dc=nti310,dc=local/g' /etc/ldap.conf
+
 
 systemctl restart nscd
 systemctl enable nscd
