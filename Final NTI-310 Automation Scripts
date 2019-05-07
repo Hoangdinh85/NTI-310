@@ -1,5 +1,5 @@
 #already has git installed
-#Setup for final
+#Setup for midterm
 git clone https://github.com/Hoangdinh85/NTI-310/
 
 #Create seven instances
@@ -7,7 +7,7 @@ git clone https://github.com/Hoangdinh85/NTI-310/
 # 2 Clients
 
 ##LOGSERVER##
-gcloud compute instances create rsyslog-server-final \
+gcloud compute instances create rsyslog1 \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -15,7 +15,7 @@ gcloud compute instances create rsyslog-server-final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=rsyslog
 
-gcloud compute instances create postgres-server-final \
+gcloud compute instances create postgres1 \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -24,7 +24,7 @@ gcloud compute instances create postgres-server-final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=InstallPostgres
 
-gcloud compute instances create ldap-server-final \
+gcloud compute instances create ldap1 \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -33,7 +33,7 @@ gcloud compute instances create ldap-server-final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=LDAPC
 
-gcloud compute instances create nfs_server_automation-final \
+gcloud compute instances create nfs1 \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -42,7 +42,7 @@ gcloud compute instances create nfs_server_automation-final \
 --scopes cloud-platform \
 --metadata-from-file startup-script=nfs-a
 
-gcloud compute instances create django \
+gcloud compute instances create django1 \
 --image-family centos-7 \
 --image-project centos-cloud \
 --zone us-east1-b \
@@ -52,7 +52,7 @@ gcloud compute instances create django \
 --metadata-from-file startup-script=django
 
  
-gcloud compute instances create nfs-client \
+gcloud compute instances create nfs-client1 \
 --image-family ubuntu-1804-lts \
 --image-project ubuntu-os-cloud \
 --zone us-east1-b \
@@ -60,7 +60,7 @@ gcloud compute instances create nfs-client \
 --scopes cloud-platform \
 --metadata-from-file startup-script=nfs-client \
 
-gcloud compute instances create ldapclient \
+gcloud compute instances create ldapclient1 \
 --image-family ubuntu-1804-lts \
 --image-project ubuntu-os-cloud \
 --zone us-east1-b \
