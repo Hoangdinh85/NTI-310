@@ -1,0 +1,47 @@
+#!/bin/bash
+#this is to install the nagios
+yum -y install nagios
+
+#enable and start nagios
+systemctl enable nagios
+systemctl start nagios
+
+#turn off SElinux
+setenforce 0
+
+#allow http service
+yum -y install httpd
+systemctl enable httpd
+systemctl start httpd
+
+#this install nrpe
+yum -y install nrpe
+systemctl enable nrpe
+systemctl start nrpe
+yum -y  install nagios-plugins-all
+yum -y install nagios-plugins-nrpe
+htpasswd -b -c /etc/nagios/passwd nagiosadmin nagiosadmin
+chmod 666 /var/log/nagios/nagios.log
+mkdir /etc/nagios/servers
+sed -i '51 s/^#//' /etc/nagios/nagios.cfg
+
+# I also had to: 
+usermod -a -G nagios hdinh47056
+#give premission to write:
+chmod 777 /etc/nagios/servers
+
+
+
+echo "define command{
+                                command_name check_nrpe
+                                command_line /usr/lib64/nagios/plugins/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
+                                }" >> /etc/nagios/objects/commands.cfg
+                                
+systemctl restart nagios
+
+#Further configuration:
+#https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/monitoring-publicservices.html (Links to an external site.)
+
+
+#verify
+/usr/sbin/nagios -v /etc/nagios/nagios.cfg
