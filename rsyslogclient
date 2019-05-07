@@ -5,8 +5,14 @@
 yum -y update && yum -y install rsyslog
 systemctl start rsyslog
 systemctl enable rsyslog
+cp /etc/rsyslog.conf /etc/rsyslog.bak
 
 
 #sending the logs to rsyslog
 echo "*.* @@rsyslog:514" >> /etc/rsyslog.conf
 systemctl restart rsyslog
+systemctl enable rsyslog
+
+#use the following to check to see that the client is logging onto the rsyslog server
+#tail -F var/log/messages 
+#echo "some text" | logger - this is a neat way to monitor what your rsyslog server is doing
