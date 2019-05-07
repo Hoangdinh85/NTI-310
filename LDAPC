@@ -21,9 +21,9 @@ systemctl start slapd
 
 
 #install httpd and phpldapadmin
-yum -y install httpd -y
-yum install epel-release -y
-yum -y install phpldapadmin -y
+yum -y install httpd 
+yum install epel-release 
+yum -y install phpldapadmin 
 
 
 # some source editing
@@ -46,6 +46,9 @@ cp /tmp/NTI-310/config.php /ect/phpldapadmin/config.php.orig
 
 #change ownership 
 chown ldap:apache /etc/phpldapadmin/config.php
+
+#this line was used to move into the temp director so we could make the following
+cd /tmp
 
 #restart systemctl httpd.service
 systemctl restart httpd.service
@@ -73,8 +76,6 @@ dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootPW
 olcRootPW: $newhash" > db.ldif
-
-#
 ldapmodify -Y EXTERNAL -H ldapi:/// -f db.ldif
 
 # Auth Restriction
