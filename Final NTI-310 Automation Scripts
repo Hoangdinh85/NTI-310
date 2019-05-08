@@ -3,7 +3,7 @@
 git clone https://github.com/Hoangdinh85/NTI-310/
 
 #Create seven instances
-# 5 Servers 
+# 7 Servers 
 # 2 Clients
 
 ##NAGIOSSERVER##
@@ -15,6 +15,7 @@ gcloud compute instances create nagios1 \
 --scopes cloud-platform \
 --metadata-from-file startup-script=NTI-310/hello-nti-310/config/nagios-a
 
+
 ##CACTISERVER##
 gcloud compute instances create cacti1 \
 --image-family centos-7 \
@@ -23,7 +24,6 @@ gcloud compute instances create cacti1 \
 --machine-type f1-micro \
 --scopes cloud-platform \
 --metadata-from-file startup-script=NTI-310/hello-nti-310/config/cacti_install
-
 
 
 ##LOGSERVER##
@@ -35,6 +35,8 @@ gcloud compute instances create rsyslog1 \
 --scopes cloud-platform \
 --metadata-from-file startup-script=rsyslog
 
+
+##POSTGRES##
 gcloud compute instances create postgres1 \
 --image-family centos-7 \
 --image-project centos-cloud \
@@ -44,6 +46,8 @@ gcloud compute instances create postgres1 \
 --scopes cloud-platform \
 --metadata-from-file startup-script=InstallPostgres
 
+
+##LDAPSERVER##
 gcloud compute instances create ldap1 \
 --image-family centos-7 \
 --image-project centos-cloud \
@@ -53,6 +57,8 @@ gcloud compute instances create ldap1 \
 --scopes cloud-platform \
 --metadata-from-file startup-script=LDAPC
 
+
+##NFSSERVER##
 gcloud compute instances create nfs1 \
 --image-family centos-7 \
 --image-project centos-cloud \
@@ -62,6 +68,8 @@ gcloud compute instances create nfs1 \
 --scopes cloud-platform \
 --metadata-from-file startup-script=nfs-a
 
+
+##DJANGO##
 gcloud compute instances create django1 \
 --image-family centos-7 \
 --image-project centos-cloud \
@@ -72,6 +80,7 @@ gcloud compute instances create django1 \
 --metadata-from-file startup-script=django
 
  
+#NFSCLIENT##
 gcloud compute instances create nfs-client1 \
 --image-family ubuntu-1804-lts \
 --image-project ubuntu-os-cloud \
@@ -80,6 +89,8 @@ gcloud compute instances create nfs-client1 \
 --scopes cloud-platform \
 --metadata-from-file startup-script=nfs-client \
 
+
+##LDAPCLIENT##
 gcloud compute instances create ldapclient1 \
 --image-family ubuntu-1804-lts \
 --image-project ubuntu-os-cloud \
