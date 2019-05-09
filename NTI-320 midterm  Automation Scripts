@@ -10,7 +10,7 @@ git clone https://github.com/Hoangdinh85/NTI-310/
 gcloud compute instances create nagios1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east1-b \
+--zone us-east4-c \
 --machine-type f1-micro \
 --scopes cloud-platform \
 --metadata-from-file startup-script=NTI-310/nagios-a
