@@ -49,7 +49,7 @@ sed -i "s/\$database_password = 'cactiuser';/\$database_password = 'P@ssw0rd1';/
 cp /etc/php.ini /etc/php.ini.orig
 sed -i 's/;date.timezone =/date.timezone = America\/Regina/' /etc/php.ini
 
-for servername in $(gcloud compute instances list | awk '{print $1}' | sed "1 d" | grep -v nagios-a );  do gcloud compute ssh --zone us-east4-c hdinh47056@$servername --command='sudo yum -y install wget && sudo wget https://raw.githubusercontent.com/Hoangdinh85/NTI-310/master/nagios-client && sudo bash nagios-client'; done
+#for servername in $(gcloud compute instances list | awk '{print $1}' | sed "1 d" | grep -v nagios-a );  do gcloud compute ssh --zone us-east4-c hdinh47056@$servername --command='sudo yum -y install wget && sudo wget https://raw.githubusercontent.com/Hoangdinh85/NTI-310/master/nagios-client && sudo bash nagios-client'; done
 
 systemctl restart httpd.service
 
