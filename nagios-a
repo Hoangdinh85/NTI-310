@@ -25,18 +25,71 @@ chmod 666 /var/log/nagios/nagios.log
 mkdir /etc/nagios/servers
 sed -i '51 s/^#//' /etc/nagios/nagios.cfg
 
+echo "define command{
+                                command_name check_nrpe
+                                command_line /usr/lib64/nagios/plugins/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
+                                }" >> /etc/nagios/objects/commands.cfg
+
 # I also had to: 
 usermod -a -G nagios hdinh47056
 #give premission to write:
 chmod 777 /etc/nagios/servers
 
+if [[  $# -eq 0 ]]; then                    # If no arguments are given to the script
+   echo "Usage:"                            # then print a usage statement and exit
+   echo "generate_config.sh hostname ip
+   "
+   exit 0;
+fi
+
+host="$1"
+ip="$2"
+
+echo "
+# Host Definition
+define host {
+    use         linux-server        ; Inherit default values from a template
+    host_name   $host               ; The name we're giving to this host
+    alias       $host server        ; A longer name associated with the host
+    address     $ip                 ; IP address of the host
+}
+# Service Definition
+define service{
+        use                             generic-service         ; Name of service template to
+        host_name                       $host
+        service_description             load
+        check_command                   check_nrpe!check_load
+}
+define service{
+        use                             generic-service         ; Name of service template to
+        host_name                       $host
+        service_description             users
+        check_command                   check_nrpe!check_users
+}
+define service{
+        use                             generic-service         ; Name of service template to
+        host_name                       $host
+        service_description             disk
+        check_command                   check_nrpe!check_disk
+}
+define service{
+        use                             generic-service         ; Name of service template to
+        host_name                       $host
+        service_description             totalprocs
+        check_command                   check_nrpe!check_total_procs
+}
+define service{
+        use                             generic-service         ; Name of service template to
+        host_name                       $host
+        service_description             memory
+        check_command                   check_nrpe!check_mem
+}
+"> "$host".cfg
 
 
-echo "define command{
-                                command_name check_nrpe
-                                command_line /usr/lib64/nagios/plugins/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
-                                }" >> /etc/nagios/objects/commands.cfg
+
                                 
+
 systemctl restart nagios
 
 #Further configuration:
