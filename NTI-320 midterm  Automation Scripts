@@ -23,7 +23,7 @@ gcloud compute instances create cacti1 \
 --zone us-east4-c \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=cacti_install.sh
+--metadata-from-file startup-script=cacti_install
 
 
 ##LOGSERVER##
