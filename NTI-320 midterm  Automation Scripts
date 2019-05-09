@@ -13,7 +13,7 @@ gcloud compute instances create nagios1 \
 --zone us-east1-b \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/hello-nti-310/config/nagios-a
+--metadata-from-file startup-script=nagios-a
 
 
 ##CACTISERVER##
@@ -23,7 +23,7 @@ gcloud compute instances create cacti1 \
 --zone us-east1-b \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/hello-nti-310/config/cacti_install.sh
+--metadata-from-file startup-script=cacti_install.sh
 
 
 ##LOGSERVER##
