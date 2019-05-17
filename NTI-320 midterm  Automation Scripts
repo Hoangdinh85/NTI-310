@@ -99,5 +99,5 @@ gcloud compute instances create ldapclient1 \
 --zone us-east4-c \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/ldapclient.sh
+--metadata-from-file startup-script=NTI-310/NTI-310/ldapclient.sh
 
