@@ -1,92 +1,90 @@
 #already has git installed
-#Setup for midterm
-git clone https://github.com/Hoangdinh85/NTI-310/
+#Setup for Final
+git clone https://github.com/Hoangdinh85/NTI-320/
 
-#Create seven instances
-# 7 Servers 
-# 2 Clients
+
 
 ##NAGIOSSERVER##
 gcloud compute instances create nagios1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --tags "http-server","https-server" \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/nagios-a
+--metadata-from-file startup-script=NTI-320/nagios-a
 
 
 ##CACTISERVER##
 gcloud compute instances create cacti1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --tags "http-server","https-server" \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/cacti_install
+--metadata-from-file startup-script=NTI-320/cacti_install
 
 
 ##LOGSERVER##
 gcloud compute instances create rsyslog1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/rsyslog
+--metadata-from-file startup-script=NTI-320/rsyslog
 
 
 ##POSTGRES##
 gcloud compute instances create postgres1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --tags "http-server","https-server" \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/InstallPostgres
+--metadata-from-file startup-script=NTI-320/InstallPostgres
 
 
 ##LDAPSERVER##
 gcloud compute instances create ldap1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --tags "http-server","https-server" \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/LDAPC
+--metadata-from-file startup-script=NTI-320/LDAPC
 
 
 ##NFSSERVER##
 gcloud compute instances create nfs1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --tags "http-server","https-server" \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/nfs-a
+--metadata-from-file startup-script=NTI-320/nfs-a
 
 
 ##DJANGO##
 gcloud compute instances create django1 \
 --image-family centos-7 \
 --image-project centos-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --tags "http-server","https-server" \
 --machine-type f1-micro \
 --scopes cloud-platform \
---metadata-from-file startup-script=NTI-310/django
+--metadata-from-file startup-script=NTI-320/django
 
  
 #NFSCLIENT##
 gcloud compute instances create nfs-client1 \
 --image-family ubuntu-1804-lts \
 --image-project ubuntu-os-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --machine-type f1-micro \
 --scopes cloud-platform \
 --metadata-from-file startup-script=NTI-310/nfs-client 
@@ -96,7 +94,7 @@ gcloud compute instances create nfs-client1 \
 gcloud compute instances create ldapclient1 \
 --image-family ubuntu-1804-lts \
 --image-project ubuntu-os-cloud \
---zone us-east4-c \
+--zone us-west1-b \
 --machine-type f1-micro \
 --scopes cloud-platform \
 --metadata-from-file startup-script=NTI-310/ldapclient.sh
