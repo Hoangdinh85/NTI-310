@@ -3,6 +3,16 @@
 git clone https://github.com/Hoangdinh85/NTI-320/
 
 
+##Build-Server##
+gcloud compute instances create build-server1 \
+--image-family centos-7 \
+--image-project centos-cloud \
+--zone us-west1-b \
+--tags "http-server","https-server" \
+--machine-type f1-micro \
+--scopes cloud-platform \
+--metadata-from-file startup-script=NTI-320/build-server
+
 
 ##NAGIOSSERVER##
 gcloud compute instances create nagios1 \
