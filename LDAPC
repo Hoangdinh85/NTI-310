@@ -5,8 +5,7 @@ yum install -y git
 #change directory to tmp
 cd /tmp
 #clone git from my respository
-git clone https://github.com/Hoangdinh85/NTI-310.git
-
+git clone https://github.com/nic-instruction/hello-nti-310.git
 
 #install ldap servers and clients
 yum -y install openldap-servers openldap-clients
@@ -99,7 +98,7 @@ echo -e dn: cn=config
 changetype: modify
 replace: olcTLSCertificateKeyFile
 olcTLSCertificateKeyFile: /etc/openldap/certs/nti310ldapkey.pem" > certs.ldif
-
+\n
 #Enter each command seperately.
 dn: cn=config
 changetype: modify
@@ -147,7 +146,6 @@ ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admi
 
 #create users in people on LDAP
 echo -e "version: 1
-\n
 # Entry 1: cn=John Doe,ou=People,dc=nti310,dc=local
 dn: cn=John Doe,ou=People,dc=nti310,dc=local
 cn: John Doe
@@ -221,10 +219,11 @@ objectclass: top
 sn: Vo
 uid: bvo
 uidnumber: 1005
-userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=" > /tmp/user1.ldif
-\n
-ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f user1.ldif -y /root/ldap_admin_pass
-\n
+userpassword: {SHA}IPWlazm7QvCO91AZ1zCNJCUNhm4=" > /tmp/users.ldif
+
+ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f /tmp/users.ldif -y /root/ldap_admin_pass
+
+
 echo -e "
 #create group in OU on LDAP.
 # Entry 1: cn=Group1,ou=Group,dc=nti310,dc=local
@@ -240,8 +239,8 @@ cn: Group2
 gidnumber: 501
 objectclass: posixGroup
 objectclass: top
-\n
-ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f groups.ldif -y /root/ldap_admin_pass
+
+ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f /tmp/groups.ldif -y /root/ldap_admin_pass
 
 #for servername in $(gcloud compute instances list | awk '{print $1}' | sed "1 d" | grep -v nagios-a );  do gcloud compute ssh --zone us-east4-c hdinh47056@$servername --command='sudo yum -y install wget && sudo wget https://raw.githubusercontent.com/Hoangdinh85/NTI-310/master/nagios-client && sudo bash nagios-client'; done
 
